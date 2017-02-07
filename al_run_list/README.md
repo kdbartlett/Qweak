@@ -11,6 +11,6 @@ The script requires the following python packages for operation:
 ##Usage
 Pass the get_run_list.py executable the following parameters:
 
-'''bash
+```bash
 ./get_run_list.py
-'''
+```
