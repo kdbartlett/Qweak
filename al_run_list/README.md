@@ -16,4 +16,4 @@ Pass the get_run_list.py executable the following parameters:
 ```bash
 pytnon3 get_run_list.py <run#> <file.csv>
 ```
-where <run#> is either `run1` or `run2` and file.csv is a .csv file of your choosing.
+where run# is either `run1` or `run2` and file.csv is the name of a .csv file of your choosing.
