@@ -4,11 +4,13 @@ Python script for extracting run information from the Qweak mysql db into a csv 
 ##Requirements
 The script requires the following python packages for operation: 
 
-*python3
-*PyMySQL
-*PyYAML 
+* python3
+* PyMySQL
+* PyYAML 
 
 ##Usage
 Pass the get_run_list.py executable the following parameters:
 
-'./get_run_list.py'
+'''bash
+./get_run_list.py
+'''

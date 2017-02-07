@@ -1,2 +1,3 @@
 **/*.yml
 **/qweakdb_ssh_connect.sh
+**/*.sql
