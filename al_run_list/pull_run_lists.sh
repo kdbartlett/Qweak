@@ -13,3 +13,8 @@ for ((i=0;i<$run_elem;i++)); do
          python3 get_run_list.py run${run[${i}]} ${target_type[${ii}]} al_run${run[${i}]}_${target_type[${ii}]}.csv
      done
 done
+
+cat al_run1_US-*.csv al_run1_DS-*.csv | grep -v 'transverse' > al_run1_long.csv
+cat al_run1_US-*.csv al_run1_DS-*.csv | grep 'transverse' > al_run1_trans.csv
+cat al_run2_US-*.csv al_run2_DS-*.csv | grep -v 'transverse' > al_run2_long.csv
+cat al_run2_US-*.csv al_run2_DS-*.csv | grep 'transverse' > al_run2_trans.csv
