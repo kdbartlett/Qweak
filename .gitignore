@@ -2,3 +2,4 @@
 **/qweakdb_ssh_connect.sh
 **/qweakdb_ssh_connect_mod.sh
 **/*.sql
+**/*.csv
