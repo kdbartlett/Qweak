@@ -18,7 +18,7 @@ import numpy as np
 
 
 # Function for connecting to sql db.
-def connectMySQL(run_num):
+def connect_mysql(run_num):
     '''Read in yaml configuration file and return a connection using the data from the file.'''
 
     # Open connection and read it into directory
@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     # Open connection to database and create a cursor to pass around
     try:
-        connection = connectMySQL(sys.argv[1])
+        connection = connect_mysql(sys.argv[1])
     except pymysql.err.OperationalError:
         print('Failed to open connection to the database!')
     cursor = connection.cursor()
