@@ -14,6 +14,9 @@ The script requires the following python packages for operation:
 Pass the get_run_list.py executable the following parameters:
 
 ```bash
-pytnon3 get_run_list.py <run#> <file.csv>
+python3 get_run_list.py <run#> <slug#_low> <slug#_high> <file.csv>
 ```
-where run# is either `run1` or `run2` and file.csv is the name of a .csv file of your choosing.
+where run# is either `run1` or `run2`, slug# is the lower and upper bound on the slug range and file.csv is the name of a .csv file of your choosing.
+
+##Additional Notes
+Included bash script for easy extraction of data from a variety of input parameters to the python code. Attempting to keep python script modular enough for possible future reuse with modification to allow passing of any sql query.  
