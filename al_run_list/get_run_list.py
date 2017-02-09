@@ -30,8 +30,8 @@ def connect_mysql(run_num):
 
 
 # Temp function for sql query of interest
-def sql_query(slug_low, slug_high):
-    sql = "SELECT bm.run_number AS 'Run #', bm.slug AS 'Slug', bm.wien_slug AS 'Wien', sc.target_position AS 'Target', ROUND(MAX(bm.value),0) AS 'Beam Current', ROUND(MAX(sc.qtor_current),0) AS 'QTor Current', sc.slow_helicity_plate AS 'IHWP1', sc.passive_helicity_plate AS 'IHWP2' FROM beam_view AS bm LEFT JOIN slow_controls_settings AS sc ON bm.runlet_id=sc.runlet_id WHERE bm.monitor='qwk_bcm8' AND bm.slug>=" + slug_low + " AND bm.slug<" + slug_high + " AND bm.value > 0 GROUP BY bm.run_number"
+def sql_query(target):
+    sql = "SELECT bm.run_number AS 'Run #', bm.slug AS 'Slug', bm.wien_slug AS 'Wien', sc.target_position AS 'Target', ROUND(MAX(bm.value),0) AS 'Beam Current', ROUND(MAX(sc.qtor_current),0) AS 'QTor Current', sc.wien_reversal AS 'Pol. State' ,sc.slow_helicity_plate AS 'IHWP1', sc.passive_helicity_plate AS 'IHWP2' FROM beam_view AS bm LEFT JOIN slow_controls_settings AS sc ON bm.runlet_id=sc.runlet_id WHERE sc.target_position='%s' AND bm.monitor='qwk_bcm6' AND bm.value > 0 GROUP BY bm.run_number" % (target)
     return sql
 
 if __name__ == '__main__':
@@ -44,8 +44,8 @@ if __name__ == '__main__':
     cursor = connection.cursor()
 
     # Pass the sql query function the slug range of interest
-    query = sql_query(sys.argv[2], sys.argv[3])
-
+    query = sql_query(sys.argv[2])
+    # print(query)
     # Execute query and collect all rows.
     cursor.execute(query)
     sql_result = cursor.fetchall()
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     # Fetchall returns list of tuples,
     # throw into Pandas dataframe for quick export to csv.
     data = pd.DataFrame(np.asarray(sql_result))
-    data.to_csv(sys.argv[4], index=False, header=False)
+    data.to_csv(sys.argv[3], index=False, header=False)
     # print(query)
 
     # Close connections

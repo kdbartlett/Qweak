@@ -3,17 +3,13 @@
 
 #Declare arrays of possible inputs
 run=(1 2)
-slug_low=(1000 2000 6000 101000 201000 501000)
-slug_high=(2000 3000 7000 102000 202000 502000)
-file_type=(long_DS4%_elastic long_US2%_elastic long_US2%_elastic trans_DS4%_vertical trans_DS4%_horizontal long_DS4%_ntodelta)
+target_type=('US-1%-Aluminum' 'US-2%-Aluminum' 'US-4%-Aluminum' 'DS-2%-Aluminum' 'DS-4%-Aluminum' 'DS-8%-Aluminum')
 #Get number of elements in the array
 run_elem=${#run[@]}
-slug_elem=${#slug_low[@]}
+target_elem=${#target_type[@]}
 
-for ((i=0;i<$run_elem;i++)); 
-do
-	for((ii=0;ii<$slug_elem;ii++));
-	do
-		python3 get_run_list.py run${run[${i}]} ${slug_low[${ii}]} ${slug_high[${ii}]} al_run${run[${i}]}_${file_type[${ii}]}.csv
-	done
+for ((i=0;i<$run_elem;i++)); do
+     for((ii=0;ii<$target_elem;ii++)); do
+         python3 get_run_list.py run${run[${i}]} ${target_type[${ii}]} al_run${run[${i}]}_${target_type[${ii}]}.csv
+     done
 done
