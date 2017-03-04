@@ -1,7 +1,7 @@
 # Aluminum Charge Radius Plot
 An Ipython notebook for generating a plot of the extracted and theoretically predicted charge radius for <sup>27</sup>Al.
 
-![Al Charge Radius Plot](https://github.com/kdbartlett/Qweak/longitudinal_analysis/al_charge_radius_plot/al_charge_radius_plot.png)
+![Al Charge Radius Plot](https://github.com/kdbartlett/Qweak/blob/master/longitudinal_analysis/al_charge_radius_plot/al_charge_radius_plot.png)
 
 ## Usage
 This data visualization is constructed in a Jupyter Notebook for ease of future modification. With the IPython notebook software installed, the notebook can be opened with the following command:
