@@ -5,3 +5,4 @@
 **/*.csv
 **/**/*.csv
 **/**/**/.ipynb_checkpoints/*
+*.swp

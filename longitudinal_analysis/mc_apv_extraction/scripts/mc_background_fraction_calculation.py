@@ -62,8 +62,11 @@ if __name__ == '__main__':
     means = [fractions[col].mean() for col in frac_names]
     errors = [fractions[col].std() for col in frac_names]
 
-    output_data = pd.DataFrame([means,errors],
+    output_data = pd.DataFrame([means, errors],
                                 columns=frac_names,
                                 index=['means', 'errors'])
-    output_data.to_csv(inputs.output_path, mode='w')
+    output_data.to_csv(inputs.output_path,
+                        index=False,
+                        mode='w',
+                        float_format='%.4f')
     exit()
