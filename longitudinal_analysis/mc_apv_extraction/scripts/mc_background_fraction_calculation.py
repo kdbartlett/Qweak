@@ -59,14 +59,25 @@ if __name__ == '__main__':
         fractions[frac_names[i]] = yields[col]/yields['y_total']
         i += 1
 
+    # Write background fractions to .csv file
+    fractions.to_csv(inputs.output_path,
+                     index=False,
+                     mode='w',
+                     float_format='%.6f')
+
+    # Calculate means and std for each background fraction
     means = [fractions[col].mean() for col in frac_names]
     errors = [fractions[col].std() for col in frac_names]
 
+    # Create Pandas dataframe to store means and errors
     output_data = pd.DataFrame([means, errors],
-                                columns=frac_names,
-                                index=['means', 'errors'])
-    output_data.to_csv(inputs.output_path,
-                        index=False,
-                        mode='w',
-                        float_format='%.4f')
+                               columns=frac_names,
+                               index=['means', 'errors'])
+
+    # Write means and errors to .csv file
+    avg_path = inputs.output_path[:-4] + '_avg' + inputs.output_path[-4:]
+    output_data.to_csv(avg_path,
+                       index=False,
+                       mode='w',
+                       float_format='%.4f')
     exit()
