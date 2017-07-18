@@ -119,6 +119,9 @@ if __name__ == '__main__':
     # New dataframe for randomized asym corrections
     asym = pd.DataFrame()
 
+    # New dataframe for calculated Asymmetries and Errors
+    cal_asym = pd.DataFrame()
+
     # Pull columns labels from asym_corr
     # Remove A_msr from list
     asym_cols = asym_corr.columns[1:]
@@ -134,16 +137,23 @@ if __name__ == '__main__':
     for col in asym_cols:
         asym[col] = gaussian(asym_corr[col], n)
 
-    # Add calculated A_pv to asym dataframe
-    asym['A_pv'] = calculate_apv(a_msr, r, asym, bk_fractions)
-
-    # Print out results
-    print('    Mean: {0:.4f}\n'.format(asym.A_pv.mean()) +
-          ' Sys Err: {0:.4f}\n'.format(asym.A_pv.std()) +
-          'Stat Err: {0:.4f}\n'.format(a_stat*asym.A_pv.mean()))
-
     # Write asymmetry corrections to .csv file
     asym.to_csv(inputs.output_path,
                 index=False,
                 mode='w',
                 float_format='%.6f')
+
+    # Add calculated A_pv to cal asym dataframe
+    cal_asym['A_pv'] = calculate_apv(a_msr, r, asym, bk_fractions)
+
+    # Print out results
+    print('    Mean: {0:.4f}\n'.format(cal_asym.A_pv.mean()) +
+          ' Sys Err: {0:.4f}\n'.format(cal_asym.A_pv.std()) +
+          'Stat Err: {0:.4f}\n'.format(a_stat*cal_asym.A_pv.mean()))
+
+    # Write calculated asymmetry to .csv file
+    cal_asym.to_csv(inputs.output_path[:-4] + '_cal' inputs.output_path[-4:],
+                    index=False,
+                    mode='w',
+                    float_format='%.6f')
+    exit()
