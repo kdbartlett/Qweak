@@ -1,0 +1,1 @@
+g++ -o Al_Alloy_Acceptance Al_Alloy_Acceptance.C `root-config --cflags --glibs` ` geant4-config --cflags --libs` -I /u/home/kbartlet/Qweak/QwGeant4/include/ -L /u/home/kbartlet/Qweak/QwGeant4/build/ -l QweakSim
