@@ -79,5 +79,5 @@ if __name__ == '__main__':
     output_data.to_csv(avg_path,
                        index=False,
                        mode='w',
-                       float_format='%.4f')
+                       float_format='%.6f')
     exit()
