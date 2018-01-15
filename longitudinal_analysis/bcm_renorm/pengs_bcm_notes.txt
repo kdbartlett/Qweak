@@ -1,0 +1,17 @@
+The BCM used in Run 2 was the combination of BCM5, 6 and 8, with the original default as BCM8. The following items are involved with the BCMs.
+
+1. MD asymmetry central value.
+
+If you have the BCM asymmetries for these BCMs, the average of these three central values is the combined BCM asymmetry. MD asym plus BCM8 asym minus the average of the three BCM asyms should give the renormalized MD asym central value.
+
+2. MD asym stat error.
+
+The stat error can be in principle obtained with renormalized MD asymmetry at quartet level. But if the regeneration of the files is not practical at the moment, maybe an approximate value can be calculated with MD error, old bcm error and new bcm error with quadrature addition and subtractions.
+
+3. BCM uncertainty systematic error.
+
+The systematic error calculation can be found in the note equ (36) and (37). Then the bcm noise contribution is subtracted from the quadrature in equ (40). Also the accurate new BCM noise should be from quartet level as well but a good value should be obtained with value in equ (39) and number of quartets in LH2 data versus numbers of quartets in Al data.
+
+Let me know if you have any questions about the items above. By the way, in LH2 data, Run 2 bcm8 asym lies right inbetween bcm5 and bcm6.
+
+Peng
