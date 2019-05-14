@@ -18,7 +18,6 @@ import argparse
 import pandas as pd
 import numpy as np
 from scipy.stats import norm
-import multiprocessing
 import matplotlib as mpl
 mpl.use('pgf')
 
@@ -67,14 +66,13 @@ mpl.rcParams.update(pgf_with_lualatex)
 # Now load pyplot package after mpl setup.
 import matplotlib.pyplot as pp
 import seaborn as sns
-
+from matplotlib.ticker import AutoMinorLocator
 pp.style.use('seaborn-ticks')
 
 
 def load_data(loc):
     '''Pass directory path of input (string), returns DataFrame.'''
-    return np.transpose(pd.read_csv(loc, header=None, index_col=0))
-
+    return pd.read_csv(loc, header=None, names=[0,1], index_col=0).transpose()
 
 def construct_map(name):
     '''Construct name map of DataFrame columns.'''
@@ -88,10 +86,10 @@ def randomize_data(data, samples):
     '''Generates new DataFrame w/o randmized (Gaussian) inputs from input.'''
     rand_data = pd.DataFrame()
     for label in data.columns:
-        rand_data[label] = data[label][1]*np.ones(samples)
-        if data[label][2] != 0.0:
-            rand_data['rand_' + label] = np.random.normal(data[label][1],
-                                                          data[label][2],
+        rand_data[label] = data[label][0]*np.ones(samples)
+        if data[label][1] != 0.00000:
+            rand_data['rand_' + label] = np.random.normal(data[label][0],
+                                                          data[label][1],
                                                           samples)
         else:
             rand_data['rand_' + label] = rand_data[label]
@@ -174,14 +172,29 @@ def calculate_stats(df):
     return pd.DataFrame([mean, std], columns=df.columns, index=['mean', 'std'])
 
 
+def save_plots(filename):
+    pp.savefig('{}.png'.format(filename), bbox_inches='tight')
+    pp.savefig('{}.pdf'.format(filename), bbox_inches='tight')
+    pp.savefig('{}.pgf'.format(filename), bbox_inches='tight')
+
+
 def plot_distribution(label, data):
-    pp.figure(figsize=figsize(1))
+    fig, ax = pp.subplots(figsize=figsize(0.9))
     ax = sns.distplot(data,
                       kde=True,
                       fit=norm,
-                      norm_hist=True)
-    pp.savefig('plots/mc_apv_' + label + '_distribution.png',
-               bbox_inches='tight')
+                      norm_hist=True,
+                      color='b',
+                      #color=sns.xkcd_rgb['dull blue'],
+                      kde_kws={"label": "KDE",
+                               "color": sns.xkcd_rgb['dull purple']},
+                      fit_kws={"label": "Fit",
+                               "color": sns.xkcd_rgb['dull red']},
+                      hist_kws={"histtype": "step"})
+    ax.xaxis.set_minor_locator(AutoMinorLocator(4))
+    ax.yaxis.set_minor_locator(AutoMinorLocator(4))
+    ax.legend(loc='upper left')
+    save_plots('plots/mc_apv_' + label + '_distribution')
 
 
 def plot_uncertainties(names, uncert):
@@ -189,8 +202,7 @@ def plot_uncertainties(names, uncert):
     pp.figure(figsize=(20, 4))
     pp.bar(bar_range, uncert)
     pp.xticks(bar_range, names, rotation=90, horizontalalignment='center')
-    pp.savefig('plots/mc_apv_uncertainty_chart.png',
-               bbox_inches='tight')
+    save_plots('plots/mc_apv_uncertainty_chart')
 
 
 def main():
@@ -209,9 +221,7 @@ def main():
 
     # Construct naming map
     name = construct_map(df.columns)
-
     # Randomize data
-    rand = pd.DataFrame()  # Empty frame to fill.
     rand = randomize_data(df, inputs.samples)
 
     # Calculate all combinations
@@ -223,11 +233,17 @@ def main():
 
     # Calculate stats(mean, std).
     results_stats = calculate_stats(results)
+    # Write calculated asymmetries and uncertainties to .csv file format.
     np.transpose(results_stats).to_csv('mc_apv_extraction_output.csv')
 
-    # Test
-    #plot_distribution('A_pv', results['A_pv'])
-    #plot_uncertainties(results_stats.columns, results_stats.loc['std'])
+    # Need to finish this section
+    # Plot randomized inputs.
+    # for label in np.diag(name):
+    #    if 
+    #    plot_distribution(label, rand[label])
+    # Plot calculated asymmetry distribution and uncertainty contributions.
+    plot_distribution('A_pv', results['A_pv'])
+    plot_uncertainties(results_stats.columns, results_stats.loc['std'])
 
 
 if __name__ == '__main__':
